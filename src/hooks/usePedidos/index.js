@@ -36,7 +36,7 @@ export const PedidosProvider = ({ children }) => {
     buscarPedidos();
   }, []);
 
-  const handleChangeTab = async (_, abaSelecionada) => {
+  const mudarAba = async (_, abaSelecionada) => {
     setPedidoSelecionado(null);
     setAbaAtiva(abaSelecionada);
   };
@@ -48,7 +48,7 @@ export const PedidosProvider = ({ children }) => {
       setAbaAtiva,
       pedidoSelecionado,
       setPedidoSelecionado,
-      handleChangeTab,
+      mudarAba,
       listaPedidos,
       setListaPedidos,
       buscarPedidos,

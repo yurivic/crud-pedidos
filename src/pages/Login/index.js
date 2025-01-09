@@ -26,7 +26,7 @@ import {
 } from "./styles";
 
 export default function Login() {
-  const isScreenSmall = useMediaQuery("(max-width: 680px)");
+  const telaPequena = useMediaQuery("(max-width: 680px)");
   const { setIsLoading } = useLoadingStore();
   const formLoginRef = useRef(null);
   const navigate = useNavigate();
@@ -38,12 +38,12 @@ export default function Login() {
         senha_usuario: formLoginRef.current.getFieldValue("senha_usuario"),
       };
 
-      const isValid = await makeValidation(
+      const ehValido = await makeValidation(
         validationSchema,
         usuarioData,
         formLoginRef
       );
-      if (!isValid) {
+      if (!ehValido) {
         return;
       }
 
@@ -58,7 +58,7 @@ export default function Login() {
 
   return (
     <>
-      {!isScreenSmall && (
+      {!telaPequena && (
         <ContainerTelaInicial>
           <ContainerLadoEsquerdo>
             <ContainerTitulo>
@@ -87,7 +87,7 @@ export default function Login() {
           </ContainerLadoDireito>
         </ContainerTelaInicial>
       )}
-      {isScreenSmall && (
+      {telaPequena && (
         <ContainerTelaInicialMobile>
           <ContainerElementosMobile>
             <TextoBoasVindas1Mobile>Faça seu login</TextoBoasVindas1Mobile>

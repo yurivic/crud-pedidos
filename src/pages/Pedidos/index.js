@@ -10,7 +10,7 @@ import ItensDoPedido from "./Abas/ItensDoPedido";
 import ListagemDePedidos from "./Abas/ListagemDePedidos";
 
 export default function Pedidos() {
-  const { formFiltrosRef, abaAtiva, pedidoSelecionado, handleChangeTab } =
+  const { formFiltrosRef, abaAtiva, pedidoSelecionado, mudarAba } =
     usePedidos();
 
   return (
@@ -18,7 +18,7 @@ export default function Pedidos() {
       <AppBar position="static" color="default">
         <Tabs
           value={abaAtiva}
-          onChange={handleChangeTab}
+          onChange={mudarAba}
           variant="scrollable"
           indicatorColor="primary"
           textColor="primary"

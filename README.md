@@ -33,7 +33,7 @@ Esta documentação visa fornecer uma visão geral sobre a estrutura e os princi
 ## Fluxo Principal
 
 ### Listagem de Pedidos
-- A página de pedidos realiza uma consulta à API para obter os dados de pedidos.
+- A página de pedidos realiza uma consulta simulada à API para obter os dados de pedidos.
 - Os pedidos são exibidos em uma tabela, permitindo interações de edição, exclusão e visualização de detalhes.
 
 ### Cadastro de Pedidos
