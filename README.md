@@ -11,7 +11,6 @@ Esta documentação visa fornecer uma visão geral sobre a estrutura e os princi
 - **React**: Biblioteca para construção da interface de usuário.
 - **React Router**: Gerenciamento de rotas da aplicação.
 - **Context API e Hooks**: Utilizados para gerenciamento de estado global.
-- **Axios**: Para realizar requisições HTTP à API.
 - **Material UI**: Biblioteca de componentes de UI (Interface do Usuário).
 - **Yup**: Biblioteca para validação de formulários.
 - **React Query (ou outras bibliotecas de requisição, se necessário)**: Para gerenciamento de dados assíncronos.
