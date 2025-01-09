@@ -23,10 +23,12 @@ Esta documentação visa fornecer uma visão geral sobre a estrutura e os princi
 - **/src**
   - **/components**: Contém os componentes reutilizáveis da aplicação, como formulários, tabelas e modais.
   - **/hooks**: Contém hooks personalizados, como `usePedidos` para gerenciar o estado global dos pedidos.
+  - **/mocks**: Contém os dados fictícios dos pedidos.
   - **/pages**: Contém as páginas da aplicação, como a página de pedidos.
   - **/routes**: Contém o gerenciamento de rotas da aplicação.
   - **/services**: Contém funções para chamadas à API.
   - **/styles**: Arquivos de estilos globais e específicos.
+  - **/utils**: Funções gerais que podem ser "úteis" em toda a aplicação.
 
 ## Fluxo Principal
 
@@ -84,3 +86,62 @@ export const PedidosProvider = ({ children }) => {
     </PedidosContext.Provider>
   );
 };
+```
+
+### Chamadas à API
+
+As simulações de requisições para a API de pedidos são feitas dentro das funções assíncronas, utilizando apenas mocks. Abaixo, temos um exemplo de como a função listarPedidos pode ser estruturada:
+```javascript
+import { mockPedidos } from "../../mocks/Pedidos";
+
+export const listarPedidos = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockPedidos);
+    }, 1000);
+  });
+};
+```
+
+### Padrões de Codificação
+- Componentes Funcionais: Utilize componentes funcionais com hooks.
+- Organização de Componentes: Componentes devem ser pequenos, reutilizáveis e bem organizados.
+- Nomes de Variáveis e Funções: Nomes devem ser claros e expressivos.
+- Estilos: Utilize styled-components para estilização. Evite estilizar diretamente no componente.
+
+## Como Contribuir
+
+1. **Fork o Repositório**: Crie um fork do projeto.
+
+2. **Crie uma Branch**: Para cada nova funcionalidade ou correção, crie uma nova branch.
+
+3. **Realize as Alterações**: Faça as alterações necessárias no código.
+
+4. **Testes**: Execute os testes e verifique se a aplicação funciona como esperado.
+
+5. **Commit**: Faça commits pequenos e descritivos.
+
+6. **Pull Request**: Submeta um Pull Request (PR) para revisão.
+
+
+### Como Rodar o Projeto Localmente
+
+1. **Clone o repositório**:
+
+    ```bash
+    git clone https://github.com/seu-usuario/crud-pedidos.git
+    ```
+
+2. **Instale as dependências**:
+
+    ```bash
+    npm install
+    ```
+
+3. **Inicie o projeto**:
+
+    ```bash
+    npm start
+    ```
+
+O projeto estará disponível em [http://localhost:3000](http://localhost:3000).
