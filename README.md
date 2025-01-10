@@ -128,7 +128,7 @@ export const listarPedidos = () => {
 1. **Clone o repositório**:
 
     ```bash
-    git clone https://github.com/seu-usuario/crud-pedidos.git
+    git clone https://github.com/ErickSilverio00/crud-pedidos.git
     ```
 
 2. **Instale as dependências**:
