@@ -6,7 +6,7 @@ O projeto `crud-pedidos` é uma aplicação de gerenciamento de pedidos que simu
 
 Esta documentação visa fornecer uma visão geral sobre a estrutura e os principais componentes do projeto, com foco em ajudar novos desenvolvedores a entender e contribuir com o código de forma eficiente.
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadass
 
 - **React**: Biblioteca para construção da interface de usuário.
 - **React Router**: Gerenciamento de rotas da aplicação.
