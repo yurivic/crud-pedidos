@@ -23,6 +23,7 @@ import {
   TextoBoasVindas,
   TextoBoasVindas1Mobile,
   Titulo,
+  EstiloButton,
 } from "./styles";
 
 export default function Login() {
@@ -80,7 +81,7 @@ export default function Login() {
                   <AreaItem>
                     <Input name="senha_usuario" label="Senha" type="password" />
                   </AreaItem>
-                  <button type="submit">Entrar</button>
+                  <EstiloButton>Entrar</EstiloButton>
                 </BoxItems>
               </Form>
             </ContainerElementos>
@@ -105,7 +106,7 @@ export default function Login() {
                 </AreaItem>
               </ContainerCamposTextoMobile>
               <ContainerBotoesMobile>
-                <button type="submit">Entrar</button>
+                <EstiloButton>Entrar</EstiloButton>
               </ContainerBotoesMobile>
             </Form>
           </ContainerElementosMobile>

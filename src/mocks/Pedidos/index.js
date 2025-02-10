@@ -29,4 +29,19 @@ export const mockPedidos = [
       { id: 4, produto: "Produto D", quantidade: 1, preco: 70, total: 70 },
     ],
   },
+  {
+    id: 3,
+    capa: "Pedido 003 - Capa de Pedido",
+    cliente: "Cliente 3",
+    data_criacao: "2025-01-08",
+    data_entrega: "2025-05-17",
+    status: "Cancelado",
+    endereco_entrega:"Conjunto Fabiana, 123, Setor Dos Afonsos",
+    forma_pagamento: "Pix",
+    observacoes: "Entrega sem atrasos",
+    itens: [
+      { id: 7, produto: "Produto Chocolate", quantidade: 1, preco: 50, total: 50 },
+      { id: 8, produto: "Máquina de Lavar", quantidade: 6, preco: 120, total: 720 },
+    ],
+  },
 ];

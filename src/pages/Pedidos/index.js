@@ -8,6 +8,9 @@ import { Container, Scroll } from "../../styles/global";
 import CadastroDoPedido from "./Abas/CadastroDoPedido";
 import ItensDoPedido from "./Abas/ItensDoPedido";
 import ListagemDePedidos from "./Abas/ListagemDePedidos";
+import DeslogarSistema from "../../components/LogOff/DeslogarSis";
+import BotaoAdd from "./Abas/ListagemDePedidos/AddPedido/BotaoAdd";
+
 
 export default function Pedidos() {
   const { formFiltrosRef, abaAtiva, pedidoSelecionado, mudarAba } =
@@ -46,11 +49,15 @@ export default function Pedidos() {
               />
             }
             disabled={!pedidoSelecionado}
-          />
+          /> 
         </Tabs>
       </AppBar>
+      <>
+        <DeslogarSistema></DeslogarSistema>
+      </>
       <Scroll>
         <TabPanel value={abaAtiva} index={0}>
+          <BotaoAdd />
           <ListagemDePedidos />
         </TabPanel>
         <TabPanel value={abaAtiva} index={1}>

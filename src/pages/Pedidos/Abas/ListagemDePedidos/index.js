@@ -3,6 +3,10 @@ import { usePedidos } from "../../../../hooks/usePedidos";
 import { BoxItems, GridContainer } from "../../../../styles/global";
 import { AgGridReact } from "ag-grid-react";
 import localeText from "../../../../utils/localeText";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import CellRenderer from "./EditPedido/BotaoEditar";
+
 
 export default function ListagemDePedidos() {
   const { formFiltrosRef, listaPedidos } = usePedidos();
@@ -12,10 +16,10 @@ export default function ListagemDePedidos() {
       field: "",
       headerName: "Ações",
       width: 120,
-      sortable: true,
+      sortable: false,
       resizable: true,
       lockVisible: true,
-      filter: true,
+      filter: false,
     },
     {
       field: "id",
@@ -46,9 +50,20 @@ export default function ListagemDePedidos() {
       lockVisible: true,
       filter: true,
     },
-  ];
+    {
+      field: "edição_pedido",
+      headerName: "EDITAR PEDIDO",
+      maxWidth: 135,
+      flex: 1,
+      sortable: false,
+      resizable: false,
+      lockVisible: true,
+      filter: false,
+      cellRenderer: CellRenderer,     
+    },
+];
 
-  return (
+return (
     <BoxItems>
       <GridContainer>
         <GridContainer height="calc(100vh - 200px)">

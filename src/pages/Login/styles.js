@@ -83,6 +83,58 @@ export const TextoBoasVindas = styled.h2`
   font-size: 20px;
 `;
 
+export const EstiloButton = styled.button`
+  display: inline-block;
+  padding: .65rem 1.0rem;
+  border-radius: 10rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+
+  /* Pseudo-elemento ::after */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1E1E1E;
+    border-radius: 10rem;
+    z-index: -2;
+  }
+
+  /* Pseudo-elemento ::before */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #00A9FF;
+    transition: all .5s;
+    border-radius: 10rem;
+    z-index: -1;
+  }
+
+  /* Efeito de hover */
+  &:hover {
+    color: #000000;
+
+    &::before {
+      width: 100%;
+    }
+  }
+`;
+
 //Tela Mobile
 export const ContainerTelaInicialMobile = styled.div`
   display: flex;
