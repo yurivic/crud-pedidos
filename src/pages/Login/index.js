@@ -44,6 +44,9 @@ export default function Login() {
         usuarioData,
         formLoginRef
       );
+
+      console.log("Eh valido?", ehValido)
+
       if (!ehValido) {
         return;
       }

@@ -5,7 +5,8 @@ import { AgGridReact } from "ag-grid-react";
 import localeText from "../../../../utils/localeText";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import CellRenderer from "./EditPedido/BotaoEditar";
+import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
+import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
 
 
 export default function ListagemDePedidos() {
@@ -20,6 +21,7 @@ export default function ListagemDePedidos() {
       resizable: true,
       lockVisible: true,
       filter: false,
+      cellRenderer: BotaoDeletePed,
     },
     {
       field: "id",
@@ -59,7 +61,7 @@ export default function ListagemDePedidos() {
       resizable: false,
       lockVisible: true,
       filter: false,
-      cellRenderer: CellRenderer,     
+      cellRenderer: EdicaoPedido,     
     },
 ];
 

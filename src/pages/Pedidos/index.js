@@ -9,7 +9,7 @@ import CadastroDoPedido from "./Abas/CadastroDoPedido";
 import ItensDoPedido from "./Abas/ItensDoPedido";
 import ListagemDePedidos from "./Abas/ListagemDePedidos";
 import DeslogarSistema from "../../components/LogOff/DeslogarSis";
-import BotaoAdd from "./Abas/ListagemDePedidos/AddPedido/BotaoAdd";
+import BotaoAdd from "../../components/Button/BotaoNewPed";
 
 
 export default function Pedidos() {

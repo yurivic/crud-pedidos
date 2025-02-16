@@ -53,10 +53,10 @@ export const excluirPedido = (id) => {
       const pedidoIndex = mockPedidos.findIndex((pedido) => pedido.id === id);
       if (pedidoIndex !== -1) {
         const pedidoRemovido = mockPedidos.splice(pedidoIndex, 1);
-        resolve(pedidoRemovido[0]);
+        resolve(pedidoRemovido[1]);
       } else {
         reject("Pedido não encontrado.");
       }
-    }, 1000);
+    }, 1500);
   });
 };

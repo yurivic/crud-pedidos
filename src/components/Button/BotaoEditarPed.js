@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { EditPedido } from '../styles';
-import { PedidosContext } from '../../../../../hooks/usePedidos';
+import { EditPedido } from './styles';
+import { PedidosContext } from '../../hooks/usePedidos';
 
-const CellRenderer = (props) => {
+const EdicaoPedido = (props) => {
 
   const { setAbaAtiva, setPedidoSelecionado } = useContext(PedidosContext);
 
   const pedido = props.data
 
+  const itens = props.data.id
+
   const EditarPedido = () => {
     setAbaAtiva(1)
-    setPedidoSelecionado(pedido)
+    setPedidoSelecionado(pedido, itens)
   }
 
   return (
@@ -27,4 +29,4 @@ const CellRenderer = (props) => {
   );
 };
 
-export default CellRenderer;
+export default EdicaoPedido;

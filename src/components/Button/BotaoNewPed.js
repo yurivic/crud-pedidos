@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { DivBotao, AddButton } from "../AddPedido/styleAddButton"
-import { PedidosContext } from "../../../../../hooks/usePedidos/index";
+import { DivBotao, AddButton } from "./styles";
+import { PedidosContext } from "../../hooks/usePedidos";
 
 
 const BotaoAdd = () => {
