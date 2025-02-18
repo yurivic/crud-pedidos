@@ -9,55 +9,56 @@ import { usePedidos } from "../../../../hooks/usePedidos";
 
 export default function ItensDoPedido() {
 
-  const { pedidoSelecionado, formItensRef, validarItens, cadastrouPedido } = usePedidos()
+  const { pedidoSelecionado, formItensRef, validarECadastrarPedido} = usePedidos()
+
+  const itens = pedidoSelecionado?.itens || []
 
   return (
-    <Form ref={formItensRef} onSubmit={cadastrouPedido}>
+    <Form ref={formItensRef} onSubmit={validarECadastrarPedido } >
       <ToolbarContainer>
-        <BotaoSave></BotaoSave>
+        <BotaoSave />
       </ToolbarContainer>
       <BoxItems fDirection="column">
-        {Array.isArray(pedidoSelecionado?.itens) && pedidoSelecionado.itens.map((item) => (
-          <ContainerItensPedido key={item.id}>
+        {(itens.length > 0 ? itens : [{}]).map((item, index) => (
+          <ContainerItensPedido key={item.id || index}> 
             <AreaItem style={{ width: "100px" }}>
               <Input
                 name="id"
                 label="Código Produto"
-                defaultValue={item.id}
-                readOnly
+                defaultValue={item.id || ''}
               />
             </AreaItem>
             <AreaItem>
               <Input
                 name="produto"
                 label="Nome Produto"
-                defaultValue={item.produto}
+                defaultValue={item.produto || ''}
               />
             </AreaItem>
             <AreaItem style={{ width: "150px" }}>
               <Input
                 name="quantidade"
                 label="Quantidade"
-                defaultValue={item.quantidade}
+                defaultValue={item.quantidade || ''}
               />
             </AreaItem>
             <AreaItem style={{ width: "150px" }}>
               <Input
                 name="preco"
                 label="Preço Produto"
-                defaultValue={item.preco}
+                defaultValue={item.preco || ''}
               />
             </AreaItem>
             <AreaItem style={{ width: "150px" }}>
               <Input
                 name="total"
                 label="Total do Pedido"
-                defaultValue={item.total}
+                defaultValue={item.total || ''}
               />
             </AreaItem>
           </ContainerItensPedido>
         ))}
       </BoxItems>
     </Form>
-  )
+  );
 }

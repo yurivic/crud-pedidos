@@ -6,15 +6,13 @@ import { PedidosContext } from '../../hooks/usePedidos';
 
 const EdicaoPedido = (props) => {
 
-  const { setAbaAtiva, setPedidoSelecionado } = useContext(PedidosContext);
+  const { setAbaAtiva, setPedidoSelecionado, atualizarPedido } = useContext(PedidosContext);
 
   const pedido = props.data
 
-  const itens = props.data.id
-
   const EditarPedido = () => {
     setAbaAtiva(1)
-    setPedidoSelecionado(pedido, itens)
+    setPedidoSelecionado(pedido)
   }
 
   return (

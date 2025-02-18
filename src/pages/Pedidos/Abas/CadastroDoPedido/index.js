@@ -12,12 +12,12 @@ import BotaoSave from "../../../../components/Button/BotaoSavePed";
 
 
 export default function CadastroDoPedido() {
-  const { formFiltrosRef, pedidoSelecionado, validarCapaPedido, cadastrouPedido } = usePedidos();
+  const { formFiltrosRef, pedidoSelecionado, validarECadastrarPedido,} = usePedidos();
 
   return (
     <BoxItems>
       <GridContainer height="calc(100vh - 200px)">
-        <Form onSubmit={cadastrouPedido} ref={formFiltrosRef}>
+        <Form ref={formFiltrosRef} onSubmit={validarECadastrarPedido}>
           <ToolbarContainer>
             <BotaoSave></BotaoSave>
           </ToolbarContainer>
@@ -28,7 +28,7 @@ export default function CadastroDoPedido() {
                   <Input
                     name="id"
                     label="Cod Pedido:"
-                    disabled="true"
+                    disabled={true}
                     defaultValue={pedidoSelecionado ? pedidoSelecionado.id : ""}
                     readOnly={pedidoSelecionado ? true : false}
                   />

@@ -78,6 +78,9 @@ export const removerFormatacaoCPF = (texto) => {
 export const makeValidation = async (schema, data, formRef, callback) => {
   formRef.current && formRef.current.setErrors({});
 
+  // console.log('Validação iniciada com schema:', schema.describe());
+  // console.log('Com os dados:', data);
+
   try {
     await schema.validate(data, {
       abortEarly: false,

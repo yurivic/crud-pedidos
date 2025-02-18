@@ -7,11 +7,11 @@ import { PedidosContext } from "../../hooks/usePedidos";
 
 const BotaoAdd = () => {
 
-    const {setAbaAtiva, setPedidoSelecionado } = useContext(PedidosContext);
+    const {setAbaAtiva, setPedidoSelecionado, pedidoSelecionado } = useContext(PedidosContext);
 
     const handleAdicionarPedido = () => {
         setAbaAtiva(1)
-        setPedidoSelecionado(null)
+        setPedidoSelecionado()
     }
 
     return (
