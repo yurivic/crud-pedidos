@@ -61,7 +61,7 @@ export const PedidosProvider = ({ children }) => {
         endereco_entrega: formFiltrosRef.current?.getFieldValue("endereco_entrega"),
         forma_pagamento: formFiltrosRef.current?.getFieldValue("forma_pagamento"),
         observacoes: formFiltrosRef.current?.getFieldValue("observacoes"),
-        itens: [],
+        itens: null,
       }
 
       const pedidoValidado = await makeValidation(
@@ -71,28 +71,34 @@ export const PedidosProvider = ({ children }) => {
       )
 
       if (!pedidoValidado) {
+        alert("Capa do pedido obrigatória!")
         return false
       }
-      
-      setPedidoSelecionado(pedidoData)
+
+      setPedidoSelecionado(pedidoValidado)
+
+      alert("Capa do pedido salvos com sucesso")
 
       return { pedidoValidado, pedidoData }
-
     } catch (error) {
-      console.error("Erro de validação", error)
+      console.error("Erro ao validar form", error)
+      return false
     }
   }
 
   const validarItens = async () => {
     try {
-      const itensData = 
+
+      const { pedidoData } = await validarCapaPedido()
+
+      const itensData = [
         {
           produto: formItensRef.current.getFieldValue("produto"),
           quantidade: formItensRef.current.getFieldValue("quantidade"),
           preco: formItensRef.current.getFieldValue("preco"),
           total: formItensRef.current.getFieldValue("total"),
         }
-  
+      ]
       const itensValidados = await makeValidation(
         validationSchemaItens, 
         itensData, 
@@ -100,50 +106,25 @@ export const PedidosProvider = ({ children }) => {
       )
   
       if (!itensValidados) {
+        alert("Itens do pedido obrigatórios!")
         return false
       }
-  
-      return { itensData }
-    } catch (error) {
-      console.error("Erro ao validar form", error);
-      return false
-    }
-  };
-  
-  const validarECadastrarPedido = async () => {
-    try {
-      
-      const capaPedido = await validarCapaPedido()
-      if (!capaPedido || !capaPedido.pedidoData) {
-        console.error("Erro: 'pedidoData' está indefinido")
-        return
-      } else {
-        console.log("Capa do pedido validada:", capaPedido)
-      }
-      
-      const { pedidoData } = capaPedido;
-  
-      
-      const itensPedido = await validarItens()
-      if (!itensPedido || !itensPedido.itensData) {
-        return
-      } else {
-        console.log("Itens do pedido validados:", itensPedido)
-      }
 
-      const { itensData } = itensPedido
+      const novoPedido = {
+        ...pedidoData,
+        itens: itensData
+      }
   
+      const pedidoCadastrado = await cadastrarPedido(novoPedido)
       
-      pedidoData.itens = itensData
-  
+      alert("Itens do pedido salvos com sucesso")
       
-      const pedidoCriado = await cadastrarPedido(pedidoData)
-      console.log("Cadastrou o pedido com sucesso", pedidoCriado)
-  
-      addRequest(pedidoCriado)
-      setPedidoSelecionado(pedidoData)
+      addRequest(pedidoCadastrado)
+
+      return pedidoCadastrado
     } catch (error) {
-      console.error("Erro de validação:", error)
+      console.error("Erro ao validar form", error)
+      return false
     }
   }
 
@@ -222,8 +203,10 @@ export const PedidosProvider = ({ children }) => {
       buscarPedidos,
       addRequest,
       exclusaoPedido,
-      validarECadastrarPedido,
+      // validarECadastrarPedido,
       validarEEditarPedido,
+      validarItens,
+      validarCapaPedido,
     }),
     [abaAtiva, pedidoSelecionado, listaPedidos]
   );
