@@ -9,12 +9,12 @@ import { usePedidos } from "../../../../hooks/usePedidos";
 
 export default function ItensDoPedido() {
 
-  const { pedidoSelecionado, formItensRef, validarECadastrarPedido} = usePedidos()
+  const { pedidoSelecionado, formItensRef, validarItens, validarEEditarPedido} = usePedidos()
 
   const itens = pedidoSelecionado?.itens || []
 
   return (
-    <Form ref={formItensRef} onSubmit={validarECadastrarPedido } >
+    <Form ref={formItensRef} onSubmit={validarItens} >
       <ToolbarContainer>
         <BotaoSave />
       </ToolbarContainer>

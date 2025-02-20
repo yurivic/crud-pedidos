@@ -10,13 +10,12 @@ export default function BotaoDeletePed(props) {
     const { exclusaoPedido } = useContext(PedidosContext)
 
     const deletarPedido = () => {
-        exclusaoPedido(props.data.id)
+        exclusaoPedido(props.data)
     }
 
     return (
         <div>
             <BotaoDelete onClick={deletarPedido}>
-                <span>DELET</span>
                 <div className="icon">
                     <FontAwesomeIcon icon={faTrash} className="fa-solid fa-trash" />
                 </div>
