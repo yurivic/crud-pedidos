@@ -9,7 +9,6 @@ import { BoxItems, GridContainer, ToolbarContainer, AreaItem } from "../../../..
 import { Form } from "@unform/web";
 import Input from "../../../../components/Input";
 import BotaoSave from "../../../../components/Button/BotaoSavePed";
-import TesteDeSelect from "../../../../components/ReactSelect";
 
 export default function CadastroDoPedido() {
   const { formFiltrosRef, pedidoSelecionado, validarCapaPedido } = usePedidos();
@@ -49,6 +48,7 @@ export default function CadastroDoPedido() {
                 </AreaItem>
                 <AreaItem style={{ width: "30%" }}>
                   <Input
+                    type="date"
                     name="data_criacao"
                     label="Data Emissão:"
                     defaultValue={pedidoSelecionado ? pedidoSelecionado.data_criacao : ''}
@@ -56,6 +56,7 @@ export default function CadastroDoPedido() {
                 </AreaItem>
                 <AreaItem style={{ width: "30%" }}>
                   <Input
+                    type="date"
                     name="data_entrega"
                     label="Data entrega:"
                     defaultValue={pedidoSelecionado ? pedidoSelecionado.data_entrega : ''}
@@ -77,19 +78,15 @@ export default function CadastroDoPedido() {
                     defaultValue={pedidoSelecionado ? pedidoSelecionado.endereco_entrega : ''}
                   />
                 </AreaItem>
-                {/* <AreaItem style={{ width: "50%" }}>
-                  <TesteDeSelect 
-                    name="forma_pagamento"
-                    label="Pagamento"
-                    defaultValue={pedidoSelecionado ? pedidoSelecionado.forma_pagamento : ''}
-                  />
-                </AreaItem> */}
                 <AreaItem style={{ width: "50%" }}>
-                  <Input
-                    name="forma_pagamento"
-                    label="Pagamento:"
-                    defaultValue={pedidoSelecionado ? pedidoSelecionado.forma_pagamento : ''}
-                  />
+                  <label>Forma Pagamento:</label>
+                  <select name="forma_pagamento" label="Forma Pagamento">
+                    <option value="boleto">BOLETO</option>
+                    <option value="cartao">CARTÃO DE CRÉDITO</option>
+                    <option value="dinheiro">DINHEIRO</option>
+                    <option value="promissoria">PROMISSÓRIA</option>
+                    <option value="pix">PIX</option>
+                  </select>
                 </AreaItem>
                 <AreaItem style={{ width: "90%" }}>
                   <Input

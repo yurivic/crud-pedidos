@@ -11,14 +11,13 @@ import { ContainerCellRenderer, Wrapper } from "./styles";
 import { limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva, pedidoSelecionado } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva } = usePedidos();
 
   useEffect(() => {
-    if(abaAtiva === 0 && !pedidoSelecionado) {
+    if(abaAtiva === 0) {
       limparCampos(formFiltrosRef)
-      console.log("Limpeza está funcionando") //console para ver que está sendo feito a limpeza dos campos usando a ref do form
     }
-  }, [abaAtiva, formFiltrosRef, pedidoSelecionado])
+  }, [abaAtiva])
 
   const gridPedidosDef = [
     {
