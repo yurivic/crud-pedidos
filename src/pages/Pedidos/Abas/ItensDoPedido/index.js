@@ -9,7 +9,7 @@ import { usePedidos } from "../../../../hooks/usePedidos";
 
 export default function ItensDoPedido() {
 
-  const { pedidoSelecionado, formItensRef, validarItens, validarEEditarPedido} = usePedidos()
+  const { pedidoSelecionado, formItensRef, validarItens } = usePedidos()
 
   const itens = pedidoSelecionado?.itens || []
 

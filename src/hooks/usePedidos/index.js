@@ -13,7 +13,7 @@ import {
   editarPedido,
   excluirPedido,
 } from "../../services/Pedidos";
-import { errorAlertMessage, makeValidation } from "../../utils/funcoes";
+import { errorAlertMessage, limparCampos, makeValidation } from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
 import { useNavigate } from "react-router-dom";
 import { validationSchemaItens, validationSchemaPed } from "../schemas/schema";
@@ -51,7 +51,7 @@ export const PedidosProvider = ({ children }) => {
 
   const validarCapaPedido = async () => {
     try {
-
+      
       const pedidoData = {
         id: formFiltrosRef.current?.getFieldValue("id"),
         capa: formFiltrosRef.current?.getFieldValue("capa"),
@@ -63,7 +63,7 @@ export const PedidosProvider = ({ children }) => {
         observacoes: formFiltrosRef.current?.getFieldValue("observacoes"),
         itens: null,
       }
-
+      
       const pedidoValidado = await makeValidation(
         validationSchemaPed,
         pedidoData,
@@ -80,6 +80,7 @@ export const PedidosProvider = ({ children }) => {
       setAbaAtiva(2)
       setPedidoSelecionado(pedidoCadastrado)
       alert("Capa do pedido salvos com sucesso")
+
 
     } catch (error) {
 
@@ -122,6 +123,7 @@ export const PedidosProvider = ({ children }) => {
       buscarPedidos()
       addRequest(pedidoEditado)
       setPedidoSelecionado(pedidoEditado)
+      setAbaAtiva(0)
 
     } catch (error) {
 

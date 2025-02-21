@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DivBotao, AddButton } from "./styles";
 import { usePedidos } from "../../hooks/usePedidos";
+import { limparCampos } from "../../utils/funcoes";
 
 
 const BotaoAdd = () => {
 
-    const {setAbaAtiva, setPedidoSelecionado} = usePedidos()
+    const {setAbaAtiva, setPedidoSelecionado, formFiltrosRef, pedidoSelecionado } = usePedidos()
 
     const handleAdicionarPedido = () => {
         setAbaAtiva(1)

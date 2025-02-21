@@ -2,12 +2,11 @@ import React from "react";
 import { BotaoDelete } from "./styles";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
-import { PedidosContext } from "../../hooks/usePedidos";
+import { usePedidos } from "../../hooks/usePedidos";
 
 export default function BotaoDeletePed(props) {
 
-    const { exclusaoPedido } = useContext(PedidosContext)
+    const { exclusaoPedido } = usePedidos()
 
     const deletarPedido = () => {
         exclusaoPedido(props.data)
