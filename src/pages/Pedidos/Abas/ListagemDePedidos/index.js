@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { usePedidos } from "../../../../hooks/usePedidos";
 import { BoxItems, GridContainer } from "../../../../styles/global";
 import { AgGridReact } from "ag-grid-react";
@@ -7,19 +7,18 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
 import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
-import { ContainerCellRenderer } from "./styles";
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  background-color: #f9f9f9;     // cor de fundo
-  border-radius: 12px;            // borda arredondada
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);  // sombra
-  padding: 15px;                  // espaço interno
-  margin-top: 1px;               // margem superior
-`;
+import { ContainerCellRenderer, Wrapper } from "./styles";
+import { limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva, pedidoSelecionado } = usePedidos();
+
+  useEffect(() => {
+    if(abaAtiva === 0 && !pedidoSelecionado) {
+      limparCampos(formFiltrosRef)
+      console.log("Limpeza está funcionando") //console para ver que está sendo feito a limpeza dos campos usando a ref do form
+    }
+  }, [abaAtiva, formFiltrosRef, pedidoSelecionado])
 
   const gridPedidosDef = [
     {
