@@ -11,11 +11,11 @@ import { ContainerCellRenderer, Wrapper } from "./styles";
 import { limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva, formItensRef } = usePedidos();
 
   useEffect(() => {
     if(abaAtiva === 0) {
-      limparCampos(formFiltrosRef)
+      limparCampos(formFiltrosRef, formItensRef)
     }
   }, [abaAtiva])
 
@@ -66,17 +66,6 @@ export default function ListagemDePedidos() {
       lockVisible: true,
       filter: true,
     },
-    // {
-    //   field: "edição_pedido",
-    //   headerName: "EDITAR PEDIDO",
-    //   maxWidth: 135,
-    //   flex: 1,
-    //   sortable: false,
-    //   resizable: false,
-    //   lockVisible: true,
-    //   filter: false,
-    //   cellRenderer: EdicaoPedido,     
-    // },
   ];
 
   return (

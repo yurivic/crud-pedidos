@@ -18,6 +18,7 @@ export default createGlobalStyle`
     font: 14px 'Outfit', sans-serif;
     background-color: ${colors.primariaBranca};
     -webkit-font-smoothing: antialiased !important;
+    overflow: hidden;
   }
 `;
 

@@ -5,7 +5,7 @@ import {usePedidos } from '../../hooks/usePedidos';
 
 const EdicaoPedido = (props) => {
 
-  const { setAbaAtiva, setPedidoSelecionado, formFiltrosRef } = usePedidos()
+  const { setAbaAtiva, setPedidoSelecionado, formFiltrosRef} = usePedidos()
 
   const EditarPedido = () => {
     setAbaAtiva(1)

@@ -1,5 +1,5 @@
 import { AppBar, Tab, Tabs } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { FaClipboard, FaCubes, FaSearch } from "react-icons/fa";
 import TabPanel from "../../components/TabPanel";
 import { usePedidos } from "../../hooks/usePedidos";
@@ -10,11 +10,10 @@ import ItensDoPedido from "./Abas/ItensDoPedido";
 import ListagemDePedidos from "./Abas/ListagemDePedidos";
 import DeslogarSistema from "../../components/LogOff/DeslogarSis";
 import BotaoAdd from "../../components/Button/BotaoNewPed";
-import { limparCampos } from "../../utils/funcoes";
 
 
 export default function Pedidos() {
-  const { formFiltrosRef, abaAtiva, pedidoSelecionado, mudarAba } = usePedidos();
+  const {abaAtiva, pedidoSelecionado, mudarAba } = usePedidos();
 
   return (
     <Container>
