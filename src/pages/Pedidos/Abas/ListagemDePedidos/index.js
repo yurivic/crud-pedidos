@@ -11,11 +11,11 @@ import { ContainerCellRenderer, Wrapper } from "./styles";
 import { limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva, formItensRef } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva } = usePedidos();
 
   useEffect(() => {
     if(abaAtiva === 0) {
-      limparCampos(formFiltrosRef, formItensRef)
+      limparCampos(formFiltrosRef)
     }
   }, [abaAtiva])
 
@@ -69,7 +69,6 @@ export default function ListagemDePedidos() {
   ];
 
   return (
-    <BoxItems>
       <GridContainer>
         <Wrapper>
           <GridContainer height="calc(100vh - 200px)">
@@ -80,7 +79,6 @@ export default function ListagemDePedidos() {
             />
           </GridContainer>
         </Wrapper>
-      </GridContainer>
-    </BoxItems>
+      </GridContainer>  
   );
 }

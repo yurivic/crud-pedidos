@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { DivBotao, AddButton } from "./styles";
+import { DivPedFat, AddButton } from "./styles";
 import { usePedidos } from "../../hooks/usePedidos";
 import { limparCampos } from "../../utils/funcoes";
 
@@ -16,13 +16,13 @@ const BotaoAdd = () => {
     }
 
     return (
-        <DivBotao>
+        <DivPedFat>
             <AddButton 
             aria-label="Adicionar Pedido" 
             onClick={handleAdicionarPedido}>
               <FontAwesomeIcon icon={faPlus} />
             </AddButton>
-        </DivBotao>
+        </DivPedFat>
     )
 
 }

@@ -10,7 +10,7 @@ export const ContainerCellRenderer = styled.div`
 
 export const Wrapper = styled.div`
   background-color: ${colors.branco};     
-  border-radius: 12px;           
+  border-radius: 5px;           
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);  
   padding: 15px;                  
   margin-top: 1px;               

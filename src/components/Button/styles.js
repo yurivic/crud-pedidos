@@ -2,14 +2,18 @@ import styled from "styled-components";
 import { colors } from "../../styles/colors";
 
 export const BotaoSavePed = styled.button`
-  width: 35px;
-  height: 35px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  border: none;
-  margin: 2px 7px;
-  font-size: 25px;
+  border: 2px solid ${colors.primariaBranca};
+  margin: 10px 17px;
+  background-color: ${colors.roxo};
+  color: white;
   cursor: pointer;
-  background-color: ${colors.primaria}
+  transition: background 0.3s ease;
+  &:hover {
+    background-color: ${colors.primariaClara};
+  }
 `
 
 export const BotaoDelete = styled.button`
@@ -227,7 +231,7 @@ export const EditPedido = styled.button`
 //   };
 // `;
 
-export const DivBotao = styled.div`
+export const DivPedFat = styled.div`
     background-color: ${colors.roxo};
     height: 50px;
 `;

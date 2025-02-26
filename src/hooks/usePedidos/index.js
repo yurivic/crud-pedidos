@@ -27,6 +27,7 @@ export const PedidosProvider = ({ children }) => {
   const [abaAtiva, setAbaAtiva] = useState(0);
   const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
   const [listaPedidos, setListaPedidos] = useState([]);
+  const [ itensPedidos, setItensPedidos ] = useState([])
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -93,15 +94,15 @@ export const PedidosProvider = ({ children }) => {
   const validarItens = async () => {
     try {
 
-      const itensData = [
-        {
-          produto: formItensRef.current.getFieldValue("produto"),
-          quantidade: formItensRef.current.getFieldValue("quantidade"),
-          preco: formItensRef.current.getFieldValue("preco"),
-          total: formItensRef.current.getFieldValue("total"),
-        }
-      ]
-
+      const itensData =  {
+        id: itensPedidos.length + 1,
+        produto: formItensRef.current.getFieldValue("produto"),
+        quantidade: formItensRef.current.getFieldValue("quantidade"),
+        preco: formItensRef.current.getFieldValue("preco"),
+        total: formItensRef.current.getFieldValue("total"),
+      }
+      
+      
       const itensValidados = await makeValidation(
         validationSchemaItens,
         itensData,
@@ -114,17 +115,18 @@ export const PedidosProvider = ({ children }) => {
       }
 
       const novoPedido = {
-        itens: itensData
+        itens: [...itensPedidos, itensData], 
       }
 
       const pedidoEditado = await editarPedido(pedidoSelecionado.id, novoPedido)
 
-      alert("Itens do pedido salvos com sucesso")
       buscarPedidos()
-      addRequest(pedidoEditado)
+      // addRequest(pedidoEditado)
       setPedidoSelecionado(pedidoEditado)
-      setAbaAtiva(0)
+      setItensPedidos((prevItens) => [...prevItens, itensData]);
+      formItensRef.current.reset()
 
+      alert("Item adicionado com sucesso!");
     } catch (error) {
 
       console.error("Erro ao validar form", error)
@@ -165,13 +167,15 @@ export const PedidosProvider = ({ children }) => {
       mudarAba,
       listaPedidos,
       setListaPedidos,
+      itensPedidos,
+      setItensPedidos,
       buscarPedidos,
       addRequest,
       exclusaoPedido,
       validarItens,
       validarCapaPedido,
     }),
-    [abaAtiva, pedidoSelecionado, listaPedidos]
+    [abaAtiva, pedidoSelecionado, listaPedidos, itensPedidos]
   );
 
   return (
