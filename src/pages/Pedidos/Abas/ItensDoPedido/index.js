@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Form } from "@unform/web";
 import Input from "../../../../components/Input";
 import { AgGridReact } from "ag-grid-react";
@@ -10,17 +10,25 @@ import { DivPedFat } from "../../../../components/Button/styles";
 import { ContainerPedCampos } from "../CadastroDoPedido/styles";
 import { Wrapper } from "../ListagemDePedidos/styles";
 import localeText from "../../../../utils/localeText";
+import { formatarMoeda } from "../../../../utils/funcoes";
 
 export default function ItensDoPedido() {
-  const { pedidoSelecionado, formItensRef, validarItens, itensPedidos, setItensPedidos } = usePedidos()
+  const {
+    pedidoSelecionado,
+    formItensRef,
+    validarItens,
+    itensPedidos,
+    setItensPedidos,
+    calcularTotal,
+  } = usePedidos();
 
   useEffect(() => {
     if (pedidoSelecionado && pedidoSelecionado.itens) {
-      setItensPedidos(pedidoSelecionado.itens)
+      setItensPedidos(pedidoSelecionado.itens);
     } else {
-      setItensPedidos([])
+      setItensPedidos([]);
     }
-  }, [pedidoSelecionado])
+  }, [pedidoSelecionado]);
 
   const gridItensDef = [
     {
@@ -35,20 +43,22 @@ export default function ItensDoPedido() {
     {
       field: "id",
       headerName: "Cod Produto",
-      width: 130,
+      width: 160,
       sortable: true,
       resizable: true,
       lockVisible: true,
       filter: true,
+      cellStyle: { textAlign: "center" },
     },
     {
       field: "produto",
       headerName: "Desc Produto",
-      width: 250,
+      width: 160,
       sortable: true,
       resizable: true,
       lockVisible: true,
       filter: true,
+      flex: 1,
     },
     {
       field: "quantidade",
@@ -58,6 +68,7 @@ export default function ItensDoPedido() {
       resizable: true,
       lockVisible: true,
       filter: true,
+      cellStyle: { textAlign: "right" },
     },
     {
       field: "preco",
@@ -67,63 +78,82 @@ export default function ItensDoPedido() {
       resizable: true,
       lockVisible: true,
       filter: true,
+      cellStyle: { textAlign: "right" },
+      valueFormatter: (params) => {
+        return formatarMoeda(params.value);
+      },
     },
     {
       field: "total",
-      headerName: "Total Produto",
+      headerName: "Total Pedido",
       width: 160,
       sortable: true,
       resizable: true,
       lockVisible: true,
       filter: true,
-    }
-  ]
+      cellStyle: { textAlign: "right" },
+      valueFormatter: (params) => {
+        return formatarMoeda(params.value);
+      },
+    },
+  ];
 
   return (
     <Form ref={formItensRef} onSubmit={validarItens}>
       <DivPedFat>
         <BotaoSave />
       </DivPedFat>
-      <Wrapper style={{ margin: "16px auto", width: '75%', display: 'flex', justifyContent: 'center' }}>
-        <ContainerPedCampos style={{ height: 'calc(100vh - 180px)', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <BoxItems fDirection="column" style={{ width: '100%' }}>
-            <ContainerItensPedido style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-              <AreaItem style={{ width: "100px" }}>
-                <Input
-                  name="id"
-                  label="Código Produto"
-                  readOnly
-                />
+      <Wrapper style={{ margin: "16px" }}>
+        <ContainerPedCampos
+          style={{
+            height: "calc(100vh - 180px)",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <BoxItems fDirection="column" style={{ width: "100%" }}>
+            <ContainerItensPedido
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <AreaItem style={{ width: "0px" }}>
+                <Input name="id" label="Código Produto" readOnly />
               </AreaItem>
-              <AreaItem style={{ flex: 1, margin: '0 16px' }}>
-                <Input
-                  name="produto"
-                  label="Nome Produto"
-                />
+              <AreaItem style={{ width: "200px", margin: "0 16px" }}>
+                <Input name="produto" label="Nome Produto" />
               </AreaItem>
-              <AreaItem style={{ width: "150px" }}>
+              <AreaItem style={{ width: "0px" }}>
                 <Input
                   name="quantidade"
                   label="Quantidade"
+                  onChange={calcularTotal}
                 />
               </AreaItem>
-              <AreaItem style={{ width: "150px" }}>
+              <AreaItem style={{ width: "0px" }}>
                 <Input
                   name="preco"
                   label="Preço Produto"
+                  onChange={calcularTotal}
                 />
               </AreaItem>
-              <AreaItem style={{ width: "150px" }}>
-                <Input
-                  name="total"
-                  label="Total do Pedido"
-                />
+              <AreaItem style={{ width: "0px" }}>
+                <Input name="total" label="Total do Pedido" />
               </AreaItem>
             </ContainerItensPedido>
           </BoxItems>
-          <div style={{ width: '100%', height: 'calc(100vh - 100px)', marginTop: '16px' }}>
+          <div
+            style={{
+              width: "100%",
+              height: "calc(100vh - 100px)",
+              marginTop: "16px",
+            }}
+          >
             <AgGridReact
-              style={{ height: '100%', width: '100%' }}
               columnDefs={gridItensDef}
               rowData={itensPedidos}
               localeText={localeText}
@@ -132,5 +162,5 @@ export default function ItensDoPedido() {
         </ContainerPedCampos>
       </Wrapper>
     </Form>
-  )
+  );
 }

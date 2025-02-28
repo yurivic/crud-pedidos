@@ -25,6 +25,7 @@ import {
   Titulo,
   EstiloButton,
 } from "./styles";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const telaPequena = useMediaQuery("(max-width: 680px)");
@@ -45,14 +46,14 @@ export default function Login() {
         formLoginRef
       );
 
-      console.log("Eh valido?", ehValido)
-
       if (!ehValido) {
         return;
       }
 
       setIsLoading(true);
       navigate("/pedidos");
+      console.log("Exibindo toast...");
+      toast.success("Logado!");
     } catch (error) {
       errorAlertMessage(error);
     } finally {

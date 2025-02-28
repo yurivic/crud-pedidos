@@ -13,7 +13,11 @@ import {
   editarPedido,
   excluirPedido,
 } from "../../services/Pedidos";
-import { errorAlertMessage, limparCampos, makeValidation } from "../../utils/funcoes";
+import {
+  errorAlertMessage,
+  limparCampos,
+  makeValidation,
+} from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
 import { useNavigate } from "react-router-dom";
 import { validationSchemaItens, validationSchemaPed } from "../schemas/schema";
@@ -27,7 +31,7 @@ export const PedidosProvider = ({ children }) => {
   const [abaAtiva, setAbaAtiva] = useState(0);
   const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
   const [listaPedidos, setListaPedidos] = useState([]);
-  const [ itensPedidos, setItensPedidos ] = useState([])
+  const [itensPedidos, setItensPedidos] = useState([]);
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,103 +51,114 @@ export const PedidosProvider = ({ children }) => {
   };
 
   const addRequest = () => {
-    setListaPedidos((prevPedidos) => [...prevPedidos])
-  }
+    setListaPedidos((prevPedidos) => [...prevPedidos]);
+  };
 
   const validarCapaPedido = async () => {
     try {
-      
       const pedidoData = {
         id: formFiltrosRef.current?.getFieldValue("id"),
         capa: formFiltrosRef.current?.getFieldValue("capa"),
         cliente: formFiltrosRef.current?.getFieldValue("cliente"),
         data_criacao: formFiltrosRef.current?.getFieldValue("data_criacao"),
         data_entrega: formFiltrosRef.current?.getFieldValue("data_entrega"),
-        endereco_entrega: formFiltrosRef.current?.getFieldValue("endereco_entrega"),
-        forma_pagamento: formFiltrosRef.current?.getFieldValue("forma_pagamento"),
+        endereco_entrega:
+          formFiltrosRef.current?.getFieldValue("endereco_entrega"),
+        forma_pagamento:
+          formFiltrosRef.current?.getFieldValue("forma_pagamento"),
         observacoes: formFiltrosRef.current?.getFieldValue("observacoes"),
         itens: null,
-      }
-      
+      };
+
       const pedidoValidado = await makeValidation(
         validationSchemaPed,
         pedidoData,
         formFiltrosRef
-      )
+      );
 
       if (!pedidoValidado) {
-        alert("Capa do pedido obrigatória!")
-        return false
+        alert("Capa do pedido obrigatória!");
+        return false;
       }
 
-      const pedidoCadastrado = await cadastrarPedido(pedidoData)
+      const pedidoCadastrado = await cadastrarPedido(pedidoData);
 
-      setAbaAtiva(2)
-      setPedidoSelecionado(pedidoCadastrado)
-      alert("Capa do pedido salvos com sucesso")
-
-
+      setAbaAtiva(2);
+      setPedidoSelecionado(pedidoCadastrado);
     } catch (error) {
-
-      console.error("Erro ao validar form", error)
-      return false
-
+      console.error("Erro ao validar form", error);
+      return false;
     }
-  }
+  };
 
   const validarItens = async () => {
     try {
-
-      const itensData =  {
+      const itensData = {
         id: itensPedidos.length + 1,
         produto: formItensRef.current.getFieldValue("produto"),
-        quantidade: formItensRef.current.getFieldValue("quantidade"),
-        preco: formItensRef.current.getFieldValue("preco"),
-        total: formItensRef.current.getFieldValue("total"),
-      }
-      
-      
+        quantidade: parseFloat(
+          formItensRef.current.getFieldValue("quantidade")
+        ),
+        preco: parseFloat(formItensRef.current.getFieldValue("preco")),
+        total: parseFloat(formItensRef.current.getFieldValue("total")),
+      };
+
       const itensValidados = await makeValidation(
         validationSchemaItens,
         itensData,
         formItensRef
-      )
+      );
 
       if (!itensValidados) {
-        alert("Itens do pedido obrigatórios!")
-        return false
+        alert("Itens do pedido obrigatórios!");
+        return false;
       }
 
       const novoPedido = {
-        itens: [...itensPedidos, itensData], 
-      }
+        itens: [...itensPedidos, itensData],
+      };
 
-      const pedidoEditado = await editarPedido(pedidoSelecionado.id, novoPedido)
+      const pedidoEditado = await editarPedido(
+        pedidoSelecionado.id,
+        novoPedido
+      );
 
-      buscarPedidos()
-      // addRequest(pedidoEditado)
-      setPedidoSelecionado(pedidoEditado)
+      buscarPedidos();
+      addRequest(pedidoEditado);
+      setPedidoSelecionado(pedidoEditado);
       setItensPedidos((prevItens) => [...prevItens, itensData]);
-      formItensRef.current.reset()
+      formItensRef.current.reset();
 
       alert("Item adicionado com sucesso!");
     } catch (error) {
-
-      console.error("Erro ao validar form", error)
-      return false
-
+      console.error("Erro ao validar form", error);
+      return false;
     }
-  }
+  };
 
   const exclusaoPedido = async (data) => {
     try {
-      console.log(data)
-      await excluirPedido(data)
-      buscarPedidos()
+      console.log(data);
+      await excluirPedido(data);
+      addRequest();
+      buscarPedidos();
     } catch (error) {
-      console.error("Erro ao excluir pedido:", error)
+      console.error("Erro ao excluir pedido:", error);
     }
-  }
+  };
+
+  const calcularTotal = () => {
+    if (formItensRef.current) {
+      const quantidade = parseFloat(
+        formItensRef.current.getFieldValue("quantidade")
+      );
+      const preco = parseFloat(formItensRef.current.getFieldValue("preco"));
+
+      const total = quantidade * preco;
+
+      formItensRef.current.setFieldValue("total", total.toFixed(2));
+    }
+  };
 
   useEffect(() => {
     buscarPedidos();
@@ -151,7 +166,7 @@ export const PedidosProvider = ({ children }) => {
 
   const mudarAba = async (_, abaSelecionada) => {
     if (abaSelecionada === 0) {
-      setPedidoSelecionado(null)
+      setPedidoSelecionado(null);
     }
     setAbaAtiva(abaSelecionada);
   };
@@ -174,6 +189,7 @@ export const PedidosProvider = ({ children }) => {
       exclusaoPedido,
       validarItens,
       validarCapaPedido,
+      calcularTotal,
     }),
     [abaAtiva, pedidoSelecionado, listaPedidos, itensPedidos]
   );
@@ -185,4 +201,4 @@ export const PedidosProvider = ({ children }) => {
 
 export const usePedidos = () => useContext(PedidosContext);
 
-export { PedidosContext }
+export { PedidosContext };
