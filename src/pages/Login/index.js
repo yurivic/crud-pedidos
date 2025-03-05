@@ -25,7 +25,7 @@ import {
   Titulo,
   EstiloButton,
 } from "./styles";
-import { toast } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const telaPequena = useMediaQuery("(max-width: 680px)");
@@ -51,9 +51,8 @@ export default function Login() {
       }
 
       setIsLoading(true);
+      // toast.success("Logado!");
       navigate("/pedidos");
-      console.log("Exibindo toast...");
-      toast.success("Logado!");
     } catch (error) {
       errorAlertMessage(error);
     } finally {
@@ -86,6 +85,7 @@ export default function Login() {
                     <Input name="senha_usuario" label="Senha" type="password" />
                   </AreaItem>
                   <EstiloButton>Entrar</EstiloButton>
+                  {/* <ToastContainer /> */}
                 </BoxItems>
               </Form>
             </ContainerElementos>

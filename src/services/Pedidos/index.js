@@ -60,3 +60,36 @@ export const excluirPedido = (id) => {
     }, 1500);
   });
 };
+
+export const editarItem = (id, novosDados) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const itemIndex = mockPedidos.findIndex((item) => item.id === id);
+      if (itemIndex !== -1) {
+        mockPedidos[itemIndex] = {
+          ...mockPedidos[itemIndex],
+          ...novosDados,
+        };
+        resolve([...mockPedidos]);
+      } else {
+        reject("Item não encontrado");
+      }
+    }, 1000);
+  });
+};
+
+export const excluirItem = (id) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("ID do item a excluir:", id);
+      const itemIndex = mockPedidos.findIndex((itens) => itens.id === id);
+      console.log(itemIndex);
+      if (itemIndex === -1) {
+        const itemRemovido = mockPedidos.splice(itemIndex, 1);
+        resolve(itemRemovido[0]);
+      } else {
+        reject("Item não encontrado.");
+      }
+    }, 1500);
+  });
+};

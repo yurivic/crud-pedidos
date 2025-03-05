@@ -7,7 +7,6 @@ import Providers from "./hooks/Providers";
 import Rotas from "./routes";
 import "./styles/agGrid.css";
 import GlobalStyle from "./styles/global";
-import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
         <Rotas />
         <ModalLoading />
         <GlobalStyle />
-        <ToastContainer />
       </Router>
     </Providers>
   );
