@@ -8,9 +8,11 @@ import { ContainerItensPedido } from "./styles";
 import { usePedidos } from "../../../../hooks/usePedidos";
 import { DivPedFat } from "../../../../components/Button/styles";
 import { ContainerPedCampos } from "../CadastroDoPedido/styles";
-import { Wrapper } from "../ListagemDePedidos/styles";
+import { ContainerCellRenderer, Wrapper } from "../ListagemDePedidos/styles";
 import localeText from "../../../../utils/localeText";
 import { formatarMoeda } from "../../../../utils/funcoes";
+import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
+import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
 
 export default function ItensDoPedido() {
   const {
@@ -20,6 +22,7 @@ export default function ItensDoPedido() {
     itensPedidos,
     setItensPedidos,
     calcularTotal,
+    exclusaoItem,
   } = usePedidos();
 
   useEffect(() => {
@@ -28,7 +31,7 @@ export default function ItensDoPedido() {
     } else {
       setItensPedidos([]);
     }
-  }, [pedidoSelecionado]);
+  }, [pedidoSelecionado, setItensPedidos]);
 
   const gridItensDef = [
     {
@@ -39,6 +42,18 @@ export default function ItensDoPedido() {
       resizable: true,
       lockVisible: true,
       filter: true,
+      cellRenderer: (params) => {
+        const deletarItem = () => {
+          exclusaoItem(params.data.id);
+          console.log("acessou o item para deletar");
+        };
+        return (
+          <ContainerCellRenderer style={{ gap: "30px" }}>
+            <BotaoDeletePed onDelete={deletarItem}></BotaoDeletePed>
+            <EdicaoPedido></EdicaoPedido>
+          </ContainerCellRenderer>
+        );
+      },
     },
     {
       field: "id",
@@ -99,9 +114,9 @@ export default function ItensDoPedido() {
   ];
 
   return (
-    <Form ref={formItensRef} onSubmit={validarItens}>
+    <Form ref={formItensRef}>
       <DivPedFat>
-        <BotaoSave />
+        <BotaoSave onSubmit={validarItens} />
       </DivPedFat>
       <Wrapper style={{ margin: "16px" }}>
         <ContainerPedCampos

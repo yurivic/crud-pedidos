@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { usePedidos } from "../../../../hooks/usePedidos";
-import { BoxItems, GridContainer } from "../../../../styles/global";
+import { GridContainer } from "../../../../styles/global";
 import { AgGridReact } from "ag-grid-react";
 import localeText from "../../../../utils/localeText";
 import "ag-grid-community/styles/ag-grid.css";
@@ -11,13 +11,14 @@ import { ContainerCellRenderer, Wrapper } from "./styles";
 import { formatarData, limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva, exclusaoPedido } =
+    usePedidos();
 
   useEffect(() => {
     if (abaAtiva === 0) {
       limparCampos(formFiltrosRef);
     }
-  }, [abaAtiva]);
+  }, [abaAtiva, formFiltrosRef]);
 
   const gridPedidosDef = [
     {
@@ -29,9 +30,12 @@ export default function ListagemDePedidos() {
       lockVisible: true,
       filter: false,
       cellRenderer: (params) => {
+        const deletarPedido = () => {
+          exclusaoPedido(params.data.id);
+        };
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
-            <BotaoDeletePed data={params.data.id}></BotaoDeletePed>
+            <BotaoDeletePed onDelete={deletarPedido}></BotaoDeletePed>
             <EdicaoPedido data={params.data}></EdicaoPedido>
           </ContainerCellRenderer>
         );

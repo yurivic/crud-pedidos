@@ -10,17 +10,14 @@ import {
 import {
   listarPedidos,
   cadastrarPedido,
-  editarPedido,
   excluirPedido,
+  editarItem,
+  excluirItem,
 } from "../../services/Pedidos";
-import {
-  errorAlertMessage,
-  limparCampos,
-  makeValidation,
-} from "../../utils/funcoes";
+import { errorAlertMessage, makeValidation } from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
-import { useNavigate } from "react-router-dom";
 import { validationSchemaItens, validationSchemaPed } from "../schemas/schema";
+import { toast } from "react-toastify";
 
 const PedidosContext = createContext();
 
@@ -32,7 +29,6 @@ export const PedidosProvider = ({ children }) => {
   const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
   const [listaPedidos, setListaPedidos] = useState([]);
   const [itensPedidos, setItensPedidos] = useState([]);
-  // const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Pedido Selecionado no Contexto:", pedidoSelecionado);
@@ -50,7 +46,7 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const addRequest = () => {
+  const gridPedidos = () => {
     setListaPedidos((prevPedidos) => [...prevPedidos]);
   };
 
@@ -124,7 +120,7 @@ export const PedidosProvider = ({ children }) => {
       );
 
       buscarPedidos();
-      addRequest(pedidoEditado);
+      gridPedidos(pedidoEditado);
       setPedidoSelecionado(pedidoEditado);
       setItensPedidos((prevItens) => [...prevItens, itensData]);
       formItensRef.current.reset();
@@ -136,14 +132,57 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
+  const editarPedido = (props) => {
+    setAbaAtiva(1);
+    setPedidoSelecionado(props.data);
+    formFiltrosRef.current.setFieldValue("id", props.data.id);
+    formFiltrosRef.current.setFieldValue("capa", props.data.capa);
+    formFiltrosRef.current.setFieldValue("cliente", props.data.cliente);
+    formFiltrosRef.current.setFieldValue(
+      "data_criacao",
+      props.data.data_criacao
+    );
+    formFiltrosRef.current.setFieldValue(
+      "data_entrega",
+      props.data.data_entrega
+    );
+    formFiltrosRef.current.setFieldValue(
+      "endereco_entrega",
+      props.data.endereco_entrega
+    );
+    formFiltrosRef.current.setFieldValue(
+      "forma_pagamento",
+      props.data.forma_pagamento
+    );
+    formFiltrosRef.current.setFieldValue("observacoes", props.data.observacoes);
+  };
+
   const exclusaoPedido = async (data) => {
     try {
-      console.log(data);
       await excluirPedido(data);
-      addRequest();
+      toast.success("Campos obrigatórios");
+      gridPedidos();
       buscarPedidos();
     } catch (error) {
       console.error("Erro ao excluir pedido:", error);
+    }
+  };
+
+  const exclusaoItem = async (data) => {
+    try {
+      await excluirItem(data);
+      setItensPedidos();
+    } catch (error) {
+      console.error("Erro ao excluir item da grid", error);
+    }
+  };
+
+  const edicaoItem = async (id, novosDados) => {
+    try {
+      const itensAtualizados = await editarItem(id, novosDados);
+      setItensPedidos(itensAtualizados);
+    } catch (error) {
+      console.error("Erro ao editar item:", error);
     }
   };
 
@@ -185,11 +224,14 @@ export const PedidosProvider = ({ children }) => {
       itensPedidos,
       setItensPedidos,
       buscarPedidos,
-      addRequest,
+      gridPedidos,
       exclusaoPedido,
       validarItens,
       validarCapaPedido,
       calcularTotal,
+      exclusaoItem,
+      edicaoItem,
+      editarPedido,
     }),
     [abaAtiva, pedidoSelecionado, listaPedidos, itensPedidos]
   );
@@ -200,5 +242,3 @@ export const PedidosProvider = ({ children }) => {
 };
 
 export const usePedidos = () => useContext(PedidosContext);
-
-export { PedidosContext };
