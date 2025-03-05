@@ -59,22 +59,6 @@ export const removerFormatacaoData = (texto) => {
   return texto.replace(/[/]/g, "");
 };
 
-export const removerFormatacaoTelefone = (texto) => {
-  return texto.replace(/[-()]/g, "");
-};
-
-export const removerFormatacaoCEP = (texto) => {
-  return texto.replace(/[-]/g, "");
-};
-
-export const removerFormatacaoCNPJ = (texto) => {
-  return texto.replace(/[.-/]/g, "");
-};
-
-export const removerFormatacaoCPF = (texto) => {
-  return texto.replace(/[.-]/g, "");
-};
-
 export const makeValidation = async (schema, data, formRef, callback) => {
   formRef.current && formRef.current.setErrors({});
   try {

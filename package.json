@@ -34,6 +34,7 @@
     "@mui/material": "^5.16.4",
     "ag-grid-community": "^32.0.2",
     "ag-grid-react": "^32.0.2",
+    "ajv": "^8.17.1",
     "axios": "^1.7.7",
     "cra-template": "1.2.0",
     "dayjs": "^1.11.10",

@@ -1,23 +1,24 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { usePedidos } from "../../../../hooks/usePedidos";
-import { BoxItems, GridContainer } from "../../../../styles/global";
+import { GridContainer } from "../../../../styles/global";
 import { AgGridReact } from "ag-grid-react";
 import localeText from "../../../../utils/localeText";
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
 import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
 import { ContainerCellRenderer, Wrapper } from "./styles";
-import { limparCampos } from "../../../../utils/funcoes";
+import { formatarData, limparCampos } from "../../../../utils/funcoes";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva } = usePedidos();
+  const { formFiltrosRef, listaPedidos, abaAtiva, exclusaoPedido } =
+    usePedidos();
 
   useEffect(() => {
-    if(abaAtiva === 0) {
-      limparCampos(formFiltrosRef)
+    if (abaAtiva === 0) {
+      limparCampos(formFiltrosRef);
     }
-  }, [abaAtiva])
+  }, [abaAtiva, formFiltrosRef]);
 
   const gridPedidosDef = [
     {
@@ -29,13 +30,16 @@ export default function ListagemDePedidos() {
       lockVisible: true,
       filter: false,
       cellRenderer: (params) => {
+        const deletarPedido = () => {
+          exclusaoPedido(params.data.id);
+        };
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
-            <BotaoDeletePed data={params.data.id}></BotaoDeletePed>
+            <BotaoDeletePed onDelete={deletarPedido}></BotaoDeletePed>
             <EdicaoPedido data={params.data}></EdicaoPedido>
           </ContainerCellRenderer>
-        )
-      }
+        );
+      },
     },
     {
       field: "id",
@@ -65,20 +69,23 @@ export default function ListagemDePedidos() {
       resizable: true,
       lockVisible: true,
       filter: true,
+      valueFormatter: (params) => {
+        return formatarData(params.value);
+      },
     },
   ];
 
   return (
-      <GridContainer>
-        <Wrapper>
-          <GridContainer height="calc(100vh - 200px)">
-            <AgGridReact
-              columnDefs={gridPedidosDef}
-              rowData={listaPedidos}
-              localeText={localeText}
-            />
-          </GridContainer>
-        </Wrapper>
-      </GridContainer>  
+    <GridContainer>
+      <Wrapper style={{ margin: "16px" }}>
+        <GridContainer height="calc(100vh - 200px)">
+          <AgGridReact
+            columnDefs={gridPedidosDef}
+            rowData={listaPedidos}
+            localeText={localeText}
+          />
+        </GridContainer>
+      </Wrapper>
+    </GridContainer>
   );
 }
