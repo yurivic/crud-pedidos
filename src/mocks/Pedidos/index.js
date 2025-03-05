@@ -25,6 +25,7 @@ export const mockPedidos = [
     forma_pagamento: "Boleto",
     observacoes: "Preferência por entrega à noite",
     itens: [
+      { id: 2, produto: "Produto B", quantidade: 1, preco: 50, total: 50 },
       { id: 3, produto: "Produto C", quantidade: 3, preco: 30, total: 90 },
       { id: 4, produto: "Produto D", quantidade: 1, preco: 70, total: 70 },
     ],
@@ -36,12 +37,24 @@ export const mockPedidos = [
     data_criacao: "2025-01-08",
     data_entrega: "2025-05-17",
     status: "Cancelado",
-    endereco_entrega:"Conjunto Fabiana, 123, Setor Dos Afonsos",
+    endereco_entrega: "Conjunto Fabiana, 123, Setor Dos Afonsos",
     forma_pagamento: "Pix",
     observacoes: "Entrega sem atrasos",
     itens: [
-      { id: 7, produto: "Produto Chocolate", quantidade: 1, preco: 50, total: 50 },
-      { id: 8, produto: "Máquina de Lavar", quantidade: 6, preco: 120, total: 720 },
+      {
+        id: 7,
+        produto: "Produto Chocolate",
+        quantidade: 1,
+        preco: 50,
+        total: 50,
+      },
+      {
+        id: 8,
+        produto: "Máquina de Lavar",
+        quantidade: 6,
+        preco: 120,
+        total: 720,
+      },
     ],
   },
 ];
