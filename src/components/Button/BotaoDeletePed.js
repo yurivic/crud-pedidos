@@ -9,6 +9,7 @@ export default function BotaoDeletePed({ onDelete }) {
       <BotaoDelete onClick={onDelete}>
         <div className="icon">
           <FontAwesomeIcon icon={faTrash} className="fa-solid fa-trash" />
+          aaaaa
         </div>
       </BotaoDelete>
     </div>
