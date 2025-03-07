@@ -13,6 +13,7 @@ import {
   excluirPedido,
   editarItem,
   excluirItem,
+  editarPedido,
 } from "../../services/Pedidos";
 import { errorAlertMessage, makeValidation } from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
@@ -132,7 +133,7 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const editarPedido = (props) => {
+  const edicaoPedido = (props) => {
     setAbaAtiva(1);
     setPedidoSelecionado(props.data);
     formFiltrosRef.current.setFieldValue("id", props.data.id);
@@ -168,11 +169,12 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const exclusaoItem = async (data) => {
+  const exclusaoItem = async (pedido) => {
     try {
-      await excluirItem(data);
+      await excluirItem(pedido);
       setItensPedidos();
     } catch (error) {
+      console.log("pedidoId", pedido);
       console.error("Erro ao excluir item da grid", error);
     }
   };
@@ -231,7 +233,7 @@ export const PedidosProvider = ({ children }) => {
       calcularTotal,
       exclusaoItem,
       edicaoItem,
-      editarPedido,
+      edicaoPedido,
     }),
     [abaAtiva, pedidoSelecionado, listaPedidos, itensPedidos]
   );

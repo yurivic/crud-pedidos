@@ -43,9 +43,12 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellRenderer: (params) => {
-        const deletarItem = () => {
-          exclusaoItem(params.data.id);
-          console.log("acessou o item para deletar");
+        const deletarItem = (event) => {
+          event.preventDefault();
+          console.log(params.data);
+          const pedidoId = params.data.id;
+          const itemId = params.data.id;
+          exclusaoItem(pedidoId, itemId);
         };
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
@@ -114,68 +117,70 @@ export default function ItensDoPedido() {
   ];
 
   return (
-    <Form ref={formItensRef}>
-      <DivPedFat>
-        <BotaoSave onSubmit={validarItens} />
-      </DivPedFat>
-      <Wrapper style={{ margin: "16px" }}>
-        <ContainerPedCampos
-          style={{
-            height: "calc(100vh - 180px)",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <BoxItems fDirection="column" style={{ width: "100%" }}>
-            <ContainerItensPedido
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <AreaItem style={{ width: "0px" }}>
-                <Input name="id" label="Código Produto" readOnly />
-              </AreaItem>
-              <AreaItem style={{ width: "200px", margin: "0 16px" }}>
-                <Input name="produto" label="Nome Produto" />
-              </AreaItem>
-              <AreaItem style={{ width: "0px" }}>
-                <Input
-                  name="quantidade"
-                  label="Quantidade"
-                  onChange={calcularTotal}
-                />
-              </AreaItem>
-              <AreaItem style={{ width: "0px" }}>
-                <Input
-                  name="preco"
-                  label="Preço Produto"
-                  onChange={calcularTotal}
-                />
-              </AreaItem>
-              <AreaItem style={{ width: "0px" }}>
-                <Input name="total" label="Total do Pedido" />
-              </AreaItem>
-            </ContainerItensPedido>
-          </BoxItems>
-          <div
+    <>
+      <Form onSubmit={validarItens} ref={formItensRef}>
+        <DivPedFat>
+          <BotaoSave />
+        </DivPedFat>
+        <Wrapper style={{ margin: "16px" }}>
+          <ContainerPedCampos
             style={{
+              height: "calc(100vh - 180px)",
               width: "100%",
-              height: "calc(100vh - 100px)",
-              marginTop: "16px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <AgGridReact
-              columnDefs={gridItensDef}
-              rowData={itensPedidos}
-              localeText={localeText}
-            />
-          </div>
-        </ContainerPedCampos>
-      </Wrapper>
-    </Form>
+            <BoxItems fDirection="column" style={{ width: "100%" }}>
+              <ContainerItensPedido
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <AreaItem style={{ width: "0px" }}>
+                  <Input name="id" label="Código Produto" readOnly />
+                </AreaItem>
+                <AreaItem style={{ width: "200px", margin: "0 16px" }}>
+                  <Input name="produto" label="Nome Produto" />
+                </AreaItem>
+                <AreaItem style={{ width: "0px" }}>
+                  <Input
+                    name="quantidade"
+                    label="Quantidade"
+                    onChange={calcularTotal}
+                  />
+                </AreaItem>
+                <AreaItem style={{ width: "0px" }}>
+                  <Input
+                    name="preco"
+                    label="Preço Produto"
+                    onChange={calcularTotal}
+                  />
+                </AreaItem>
+                <AreaItem style={{ width: "0px" }}>
+                  <Input name="total" label="Total do Pedido" />
+                </AreaItem>
+              </ContainerItensPedido>
+            </BoxItems>
+            <div
+              style={{
+                width: "100%",
+                height: "calc(100vh - 100px)",
+                marginTop: "16px",
+              }}
+            >
+              <AgGridReact
+                columnDefs={gridItensDef}
+                rowData={itensPedidos}
+                localeText={localeText}
+              />
+            </div>
+          </ContainerPedCampos>
+        </Wrapper>
+      </Form>
+    </>
   );
 }

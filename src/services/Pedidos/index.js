@@ -78,18 +78,26 @@ export const editarItem = (id, novosDados) => {
   });
 };
 
-export const excluirItem = (id) => {
+export const excluirItem = (pedidoId, itemId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("ID do item a excluir:", id);
-      const itemIndex = mockPedidos.findIndex((itens) => itens.id === id);
-      console.log(itemIndex);
-      if (itemIndex === -1) {
-        const itemRemovido = mockPedidos.splice(itemIndex, 1);
-        resolve(itemRemovido[0]);
-      } else {
-        reject("Item não encontrado.");
+      const pedido = mockPedidos.find((p) => p.id === pedidoId);
+
+      if (!pedido) {
+        reject(`Pedido com ID ${pedidoId} não encontrado.`);
+        return;
       }
+
+      const itemIndex = pedido.itens.findIndex((item) => item.id === itemId);
+
+      if (itemIndex === -1) {
+        reject(`Item com ID ${itemId} não encontrado no pedido ${pedidoId}.`);
+        return;
+      }
+
+      const itemRemovido = pedido.itens.splice(itemIndex, 1);
+
+      resolve(itemRemovido[1]);
     }, 1500);
   });
 };
