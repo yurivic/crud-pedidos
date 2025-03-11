@@ -9,10 +9,18 @@ import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
 import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
 import { ContainerCellRenderer, Wrapper } from "./styles";
 import { formatarData, limparCampos } from "../../../../utils/funcoes";
+import { editarPedido } from "../../../../services/Pedidos";
 
 export default function ListagemDePedidos() {
-  const { formFiltrosRef, listaPedidos, abaAtiva, exclusaoPedido } =
-    usePedidos();
+  const {
+    formFiltrosRef,
+    listaPedidos,
+    abaAtiva,
+    exclusaoPedido,
+    edicaoItensDoPedido,
+    setAbaAtiva,
+    setPedidoSelecionado,
+  } = usePedidos();
 
   useEffect(() => {
     if (abaAtiva === 0) {
@@ -29,14 +37,43 @@ export default function ListagemDePedidos() {
       resizable: true,
       lockVisible: true,
       filter: false,
-      cellRenderer: (params) => {
+      cellRenderer: (params, e) => {
         const deletarPedido = () => {
           exclusaoPedido(params.data.id);
         };
+
+        const edicaoPedido = (data) => {
+          setAbaAtiva(1);
+          setPedidoSelecionado(data);
+          formFiltrosRef.current.setFieldValue("id", data.id);
+          formFiltrosRef.current.setFieldValue("capa", data.capa);
+          formFiltrosRef.current.setFieldValue("cliente", data.cliente);
+          formFiltrosRef.current.setFieldValue(
+            "data_criacao",
+            data.data_criacao
+          );
+          formFiltrosRef.current.setFieldValue(
+            "data_entrega",
+            data.data_entrega
+          );
+          formFiltrosRef.current.setFieldValue(
+            "endereco_entrega",
+            data.endereco_entrega
+          );
+          formFiltrosRef.current.setFieldValue(
+            "forma_pagamento",
+            data.forma_pagamento
+          );
+          formFiltrosRef.current.setFieldValue("observacoes", data.observacoes);
+        };
+
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
             <BotaoDeletePed onDelete={deletarPedido}></BotaoDeletePed>
-            <EdicaoPedido data={params.data}></EdicaoPedido>
+            <EdicaoPedido
+              onEdit={edicaoPedido}
+              data={params.data}
+            ></EdicaoPedido>
           </ContainerCellRenderer>
         );
       },

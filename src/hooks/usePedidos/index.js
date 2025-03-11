@@ -19,6 +19,7 @@ import { errorAlertMessage, makeValidation } from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
 import { validationSchemaItens, validationSchemaPed } from "../schemas/schema";
 import { toast } from "react-toastify";
+import { mockPedidos } from "../../mocks/Pedidos";
 
 const PedidosContext = createContext();
 
@@ -133,31 +134,6 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const edicaoPedido = (props) => {
-    setAbaAtiva(1);
-    setPedidoSelecionado(props.data);
-    formFiltrosRef.current.setFieldValue("id", props.data.id);
-    formFiltrosRef.current.setFieldValue("capa", props.data.capa);
-    formFiltrosRef.current.setFieldValue("cliente", props.data.cliente);
-    formFiltrosRef.current.setFieldValue(
-      "data_criacao",
-      props.data.data_criacao
-    );
-    formFiltrosRef.current.setFieldValue(
-      "data_entrega",
-      props.data.data_entrega
-    );
-    formFiltrosRef.current.setFieldValue(
-      "endereco_entrega",
-      props.data.endereco_entrega
-    );
-    formFiltrosRef.current.setFieldValue(
-      "forma_pagamento",
-      props.data.forma_pagamento
-    );
-    formFiltrosRef.current.setFieldValue("observacoes", props.data.observacoes);
-  };
-
   const exclusaoPedido = async (data) => {
     try {
       await excluirPedido(data);
@@ -169,20 +145,27 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const exclusaoItem = async (pedido) => {
+  const excluirItensDoPedido = async (pedidoId, itemId) => {
     try {
-      await excluirItem(pedido);
-      setItensPedidos();
+      await excluirItem(pedidoId, itemId);
+      setItensPedidos((prevItens) =>
+        prevItens.filter((item) => item.id !== itemId)
+      );
+      buscarPedidos();
     } catch (error) {
-      console.log("pedidoId", pedido);
-      console.error("Erro ao excluir item da grid", error);
+      console.error("Item não encontrado no pedido", error);
     }
   };
 
-  const edicaoItem = async (id, novosDados) => {
+  const edicaoItensDoPedido = async (pedidoId, itemId, novosDados) => {
     try {
-      const itensAtualizados = await editarItem(id, novosDados);
-      setItensPedidos(itensAtualizados);
+      const itemAtualizado = await editarItem(pedidoId, itemId, novosDados);
+
+      setItensPedidos((prevItens) =>
+        prevItens.map((item) =>
+          item.id === itemId ? { ...item, ...itemAtualizado } : item
+        )
+      );
     } catch (error) {
       console.error("Erro ao editar item:", error);
     }
@@ -231,9 +214,8 @@ export const PedidosProvider = ({ children }) => {
       validarItens,
       validarCapaPedido,
       calcularTotal,
-      exclusaoItem,
-      edicaoItem,
-      edicaoPedido,
+      excluirItensDoPedido,
+      edicaoItensDoPedido,
     }),
     [abaAtiva, pedidoSelecionado, listaPedidos, itensPedidos]
   );

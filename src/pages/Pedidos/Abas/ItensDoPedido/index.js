@@ -22,7 +22,11 @@ export default function ItensDoPedido() {
     itensPedidos,
     setItensPedidos,
     calcularTotal,
-    exclusaoItem,
+    excluirItensDoPedido,
+    edicaoItensDoPedido,
+    setPedidoSelecionado,
+    formFiltrosRef,
+    setAbaAtiva,
   } = usePedidos();
 
   useEffect(() => {
@@ -43,16 +47,17 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellRenderer: (params) => {
-        const deletarItem = (event) => {
-          event.preventDefault();
-          console.log(params.data);
-          const pedidoId = params.data.id;
-          const itemId = params.data.id;
-          exclusaoItem(pedidoId, itemId);
+        const itemId = params.data.id;
+        const pedidoId = pedidoSelecionado?.id;
+
+        const deletarItens = async (e) => {
+          e.preventDefault();
+          await excluirItensDoPedido(pedidoId, itemId);
         };
+
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
-            <BotaoDeletePed onDelete={deletarItem}></BotaoDeletePed>
+            <BotaoDeletePed onDelete={deletarItens}></BotaoDeletePed>
             <EdicaoPedido></EdicaoPedido>
           </ContainerCellRenderer>
         );

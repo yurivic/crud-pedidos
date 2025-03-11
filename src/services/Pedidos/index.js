@@ -61,18 +61,29 @@ export const excluirPedido = (id) => {
   });
 };
 
-export const editarItem = (id, novosDados) => {
+export const editarItem = (pedidoId, itemId, novosDados) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const itemIndex = mockPedidos.findIndex((item) => item.id === id);
+      const pedido = mockPedidos.find((p) => p.id === pedidoId);
+
+      if (!pedido) {
+        reject(`Pedido com ID ${pedidoId} não encontrado.`);
+        return;
+      }
+
+      const itemIndex = pedido.itens.findIndex((item) => item.id === itemId);
       if (itemIndex !== -1) {
-        mockPedidos[itemIndex] = {
-          ...mockPedidos[itemIndex],
-          ...novosDados,
+        pedido.itens[itemIndex] = {
+          ...pedido.itens[itemIndex],
+          novosDados,
         };
-        resolve([...mockPedidos]);
+
+        const itemAtualizado = pedido.itens[itemIndex];
+        itemAtualizado.total = itemAtualizado.quantidade * itemAtualizado.preco;
+
+        resolve(itemAtualizado);
       } else {
-        reject("Item não encontrado");
+        reject(`Item com ID ${itemId} não encontrado no pedido ${pedidoId}.`);
       }
     }, 1000);
   });
@@ -96,7 +107,6 @@ export const excluirItem = (pedidoId, itemId) => {
       }
 
       const itemRemovido = pedido.itens.splice(itemIndex, 1);
-
       resolve(itemRemovido[1]);
     }, 1500);
   });
