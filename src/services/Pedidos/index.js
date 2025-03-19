@@ -62,11 +62,9 @@ export const excluirPedido = (id) => {
 };
 
 export const editarItem = (pedidoId, idItem, novosDados) => {
-  console.log(idItem);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const pedidoIndex = mockPedidos.find((pedido) => pedido.id === pedidoId);
-      console.log("pedidoIndex:", pedidoIndex);
 
       if (!pedidoIndex) {
         reject(`Pedido com ID ${pedidoId} não encontrado.`);
@@ -76,14 +74,12 @@ export const editarItem = (pedidoId, idItem, novosDados) => {
       const itemIndex = pedidoIndex.itens.findIndex(
         (item) => item.id === idItem
       );
-      console.log(itemIndex);
 
       if (itemIndex !== -1) {
         pedidoIndex.itens[itemIndex] = {
           ...pedidoIndex.itens[itemIndex],
           ...novosDados,
         };
-        console.log(novosDados);
 
         const itemAtualizado = pedidoIndex.itens[itemIndex];
         itemAtualizado.total = itemAtualizado.quantidade * itemAtualizado.preco;

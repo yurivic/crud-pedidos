@@ -13,9 +13,11 @@ import localeText from "../../../../utils/localeText";
 import { formatarMoeda } from "../../../../utils/funcoes";
 import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
 import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
+import { limparCampos } from "../../../../utils/funcoes";
 
 export default function ItensDoPedido() {
   const {
+    abaAtiva,
     pedidoSelecionado,
     formItensRef,
     validarItens,
@@ -26,6 +28,12 @@ export default function ItensDoPedido() {
     edicaoItensDoPedido,
     setPedidoSelecionado,
   } = usePedidos();
+
+  useEffect(() => {
+    if (abaAtiva === 1) {
+      limparCampos(formItensRef);
+    }
+  }, [abaAtiva, formItensRef]);
 
   useEffect(() => {
     if (pedidoSelecionado && pedidoSelecionado.itens) {
@@ -45,6 +53,7 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellRenderer: (params) => {
+        console.log(params.data.id);
         const itemId = params.data.id;
         const pedidoId = pedidoSelecionado?.id;
 
@@ -111,9 +120,9 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellStyle: { textAlign: "right" },
-      // valueFormatter: (params) => {
-      //   return formatarMoeda(params.value);
-      // },
+      valueFormatter: (params) => {
+        return formatarMoeda(params.value);
+      },
     },
     {
       field: "total",
@@ -124,9 +133,9 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellStyle: { textAlign: "right" },
-      // valueFormatter: (params) => {
-      //   return formatarMoeda(params.value);
-      // },
+      valueFormatter: (params) => {
+        return formatarMoeda(params.value);
+      },
     },
   ];
 

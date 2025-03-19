@@ -88,10 +88,10 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const validarItens = async (itemId, novosDados) => {
+  const validarItens = async () => {
     try {
       const itensData = {
-        id: parseFloat(formItensRef.current.getFieldValue("id")),
+        id: formItensRef.current.getFieldValue("id") || itensPedidos.length + 1,
         produto: formItensRef.current.getFieldValue("produto"),
         quantidade: parseFloat(
           formItensRef.current.getFieldValue("quantidade")
@@ -111,8 +111,12 @@ export const PedidosProvider = ({ children }) => {
         return false;
       }
 
-      if (itemId) {
-        await edicaoItensDoPedido(pedidoSelecionado.id, itemId, novosDados);
+      if (formItensRef.current.getFieldValue("id")) {
+        await edicaoItensDoPedido(
+          pedidoSelecionado.id,
+          Number(itensData.id),
+          itensData
+        );
         buscarPedidos();
         gridPedidos(pedidoSelecionado);
         setPedidoSelecionado(pedidoSelecionado);
@@ -163,13 +167,11 @@ export const PedidosProvider = ({ children }) => {
   };
 
   const edicaoItensDoPedido = async (pedidoId, itemId, novosDados) => {
-    console.log(pedidoId);
-    console.log(itemId.id);
     try {
       const item = await editarItem(pedidoId, itemId, novosDados);
       setItensPedidos((prevItens) =>
         prevItens.map((item) =>
-          item.id === novosDados ? { ...item, ...novosDados } : item
+          item.id === itemId ? { ...item, ...novosDados } : item
         )
       );
       return item;
