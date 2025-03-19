@@ -9,7 +9,6 @@ import EdicaoPedido from "../../../../components/Button/BotaoEditarPed";
 import BotaoDeletePed from "../../../../components/Button/BotaoDeletePed";
 import { ContainerCellRenderer, Wrapper } from "./styles";
 import { formatarData, limparCampos } from "../../../../utils/funcoes";
-import { editarPedido } from "../../../../services/Pedidos";
 
 export default function ListagemDePedidos() {
   const {
@@ -17,7 +16,6 @@ export default function ListagemDePedidos() {
     listaPedidos,
     abaAtiva,
     exclusaoPedido,
-    edicaoItensDoPedido,
     setAbaAtiva,
     setPedidoSelecionado,
   } = usePedidos();
@@ -37,7 +35,7 @@ export default function ListagemDePedidos() {
       resizable: true,
       lockVisible: true,
       filter: false,
-      cellRenderer: (params, e) => {
+      cellRenderer: (params) => {
         const deletarPedido = () => {
           exclusaoPedido(params.data.id);
         };

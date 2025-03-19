@@ -25,8 +25,6 @@ export default function ItensDoPedido() {
     excluirItensDoPedido,
     edicaoItensDoPedido,
     setPedidoSelecionado,
-    formFiltrosRef,
-    setAbaAtiva,
   } = usePedidos();
 
   useEffect(() => {
@@ -55,10 +53,21 @@ export default function ItensDoPedido() {
           await excluirItensDoPedido(pedidoId, itemId);
         };
 
+        const editarItens = async (data) => {
+          formItensRef.current.setFieldValue("id", data.id);
+          formItensRef.current.setFieldValue("produto", data.produto);
+          formItensRef.current.setFieldValue("quantidade", data.quantidade);
+          formItensRef.current.setFieldValue("preco", data.preco);
+          formItensRef.current.setFieldValue("total", data.total);
+        };
+
         return (
           <ContainerCellRenderer style={{ gap: "30px" }}>
             <BotaoDeletePed onDelete={deletarItens}></BotaoDeletePed>
-            <EdicaoPedido></EdicaoPedido>
+            <EdicaoPedido
+              onEdit={editarItens}
+              data={params.data}
+            ></EdicaoPedido>
           </ContainerCellRenderer>
         );
       },
@@ -102,9 +111,9 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellStyle: { textAlign: "right" },
-      valueFormatter: (params) => {
-        return formatarMoeda(params.value);
-      },
+      // valueFormatter: (params) => {
+      //   return formatarMoeda(params.value);
+      // },
     },
     {
       field: "total",
@@ -115,9 +124,9 @@ export default function ItensDoPedido() {
       lockVisible: true,
       filter: true,
       cellStyle: { textAlign: "right" },
-      valueFormatter: (params) => {
-        return formatarMoeda(params.value);
-      },
+      // valueFormatter: (params) => {
+      //   return formatarMoeda(params.value);
+      // },
     },
   ];
 

@@ -19,7 +19,6 @@ import { errorAlertMessage, makeValidation } from "../../utils/funcoes";
 import useLoadingStore from "../useLoadingStore";
 import { validationSchemaItens, validationSchemaPed } from "../schemas/schema";
 import { toast } from "react-toastify";
-import { mockPedidos } from "../../mocks/Pedidos";
 
 const PedidosContext = createContext();
 
@@ -89,10 +88,10 @@ export const PedidosProvider = ({ children }) => {
     }
   };
 
-  const validarItens = async () => {
+  const validarItens = async (itemId, novosDados) => {
     try {
       const itensData = {
-        id: itensPedidos.length + 1,
+        id: parseFloat(formItensRef.current.getFieldValue("id")),
         produto: formItensRef.current.getFieldValue("produto"),
         quantidade: parseFloat(
           formItensRef.current.getFieldValue("quantidade")
@@ -112,22 +111,28 @@ export const PedidosProvider = ({ children }) => {
         return false;
       }
 
-      const novoPedido = {
-        itens: [...itensPedidos, itensData],
-      };
+      if (itemId) {
+        await edicaoItensDoPedido(pedidoSelecionado.id, itemId, novosDados);
+        buscarPedidos();
+        gridPedidos(pedidoSelecionado);
+        setPedidoSelecionado(pedidoSelecionado);
+      } else {
+        const novoPedido = {
+          itens: [...itensPedidos, itensData],
+        };
 
-      const pedidoEditado = await editarPedido(
-        pedidoSelecionado.id,
-        novoPedido
-      );
+        const pedidoEditado = await editarPedido(
+          pedidoSelecionado.id,
+          novoPedido
+        );
 
-      buscarPedidos();
-      gridPedidos(pedidoEditado);
-      setPedidoSelecionado(pedidoEditado);
-      setItensPedidos((prevItens) => [...prevItens, itensData]);
-      formItensRef.current.reset();
+        buscarPedidos();
+        setPedidoSelecionado(pedidoEditado);
+        setItensPedidos((prevItens) => [...prevItens, itensData]);
+        formItensRef.current.reset();
 
-      alert("Item adicionado com sucesso!");
+        alert("Item adicionado com sucesso!");
+      }
     } catch (error) {
       console.error("Erro ao validar form", error);
       return false;
@@ -158,14 +163,16 @@ export const PedidosProvider = ({ children }) => {
   };
 
   const edicaoItensDoPedido = async (pedidoId, itemId, novosDados) => {
+    console.log(pedidoId);
+    console.log(itemId.id);
     try {
-      const itemAtualizado = await editarItem(pedidoId, itemId, novosDados);
-
+      const item = await editarItem(pedidoId, itemId, novosDados);
       setItensPedidos((prevItens) =>
         prevItens.map((item) =>
-          item.id === itemId ? { ...item, ...itemAtualizado } : item
+          item.id === novosDados ? { ...item, ...novosDados } : item
         )
       );
+      return item;
     } catch (error) {
       console.error("Erro ao editar item:", error);
     }

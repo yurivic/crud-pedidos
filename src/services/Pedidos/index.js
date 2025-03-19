@@ -61,29 +61,36 @@ export const excluirPedido = (id) => {
   });
 };
 
-export const editarItem = (pedidoId, itemId, novosDados) => {
+export const editarItem = (pedidoId, idItem, novosDados) => {
+  console.log(idItem);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const pedido = mockPedidos.find((p) => p.id === pedidoId);
+      const pedidoIndex = mockPedidos.find((pedido) => pedido.id === pedidoId);
+      console.log("pedidoIndex:", pedidoIndex);
 
-      if (!pedido) {
+      if (!pedidoIndex) {
         reject(`Pedido com ID ${pedidoId} não encontrado.`);
         return;
       }
 
-      const itemIndex = pedido.itens.findIndex((item) => item.id === itemId);
-      if (itemIndex !== -1) {
-        pedido.itens[itemIndex] = {
-          ...pedido.itens[itemIndex],
-          novosDados,
-        };
+      const itemIndex = pedidoIndex.itens.findIndex(
+        (item) => item.id === idItem
+      );
+      console.log(itemIndex);
 
-        const itemAtualizado = pedido.itens[itemIndex];
+      if (itemIndex !== -1) {
+        pedidoIndex.itens[itemIndex] = {
+          ...pedidoIndex.itens[itemIndex],
+          ...novosDados,
+        };
+        console.log(novosDados);
+
+        const itemAtualizado = pedidoIndex.itens[itemIndex];
         itemAtualizado.total = itemAtualizado.quantidade * itemAtualizado.preco;
 
         resolve(itemAtualizado);
       } else {
-        reject(`Item com ID ${itemId} não encontrado no pedido ${pedidoId}.`);
+        reject(`Item com ID ${idItem} não encontrado no pedido ${pedidoId}.`);
       }
     }, 1000);
   });
