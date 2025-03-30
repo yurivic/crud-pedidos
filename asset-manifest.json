@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/crud-pedidos/static/css/main.0cf9e4eb.css",
+    "main.js": "/crud-pedidos/static/js/main.73f56b9c.js",
+    "static/js/736.7559d75c.chunk.js": "/crud-pedidos/static/js/736.7559d75c.chunk.js",
+    "static/js/21.089d15ca.chunk.js": "/crud-pedidos/static/js/21.089d15ca.chunk.js",
+    "static/js/276.d56f12c4.chunk.js": "/crud-pedidos/static/js/276.d56f12c4.chunk.js",
+    "static/js/230.cc2a9c0d.chunk.js": "/crud-pedidos/static/js/230.cc2a9c0d.chunk.js",
+    "index.html": "/crud-pedidos/index.html",
+    "main.0cf9e4eb.css.map": "/crud-pedidos/static/css/main.0cf9e4eb.css.map",
+    "main.73f56b9c.js.map": "/crud-pedidos/static/js/main.73f56b9c.js.map",
+    "736.7559d75c.chunk.js.map": "/crud-pedidos/static/js/736.7559d75c.chunk.js.map",
+    "21.089d15ca.chunk.js.map": "/crud-pedidos/static/js/21.089d15ca.chunk.js.map",
+    "276.d56f12c4.chunk.js.map": "/crud-pedidos/static/js/276.d56f12c4.chunk.js.map",
+    "230.cc2a9c0d.chunk.js.map": "/crud-pedidos/static/js/230.cc2a9c0d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0cf9e4eb.css",
+    "static/js/main.73f56b9c.js"
+  ]
+}
