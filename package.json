@@ -1,6 +1,7 @@
 {
   "name": "crud-pedidos",
   "version": "0.1.0",
+  "homepage": "https://yurivic.github.io/crud-pedidos",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -11,6 +12,7 @@
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.3",
     "postcss-loader": "^8.1.1",
     "react-perfect-scrollbar": "^1.5.8",
@@ -54,6 +56,8 @@
     "zustand": "^4.4.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
